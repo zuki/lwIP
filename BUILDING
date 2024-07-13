@@ -1,53 +1,49 @@
-Building lwIP
+lwIPのビルド
 =============
 
-lwIP uses a CMake based build system.
+lwIPはCMakeベースのビルドシステムを使用しています。
 
-The CMake files in this project are designed to
-be included into your own CMake files. They are
-mainly variable definitions containing a list of
-source files and predefined static libraries to
-be linked against application code.
+このプロジェクトのCMakeファイルはあなた自身のCMakeファイルに
+インクルードされるように設計されています。これらは主に、
+ソースファイルとアプリケーションコードにリンクされるべき事前
+定義されたスタティックライブラリのリストを含む変数定義です。
 
-1) lwIP sources:
-   src/Filelists.cmake provides file lists containing
-   the lwIP core library.
-   The file also contains two static libraries, lwipcore
-   and lwipallapps, where you can link your app against.
-   This is the file that is useful to all lwIP users.
+1) lwIPソース:
+   src/Filelists.cmake はlwIPコアライブラリを含むファイル
+   リストを提供します。
+   ファイルには2つのスタティックライブラリ, lwipcoreと
+   plwipallappsも含まれており、アプリケーションにリンクする
+   ことができます。これはすべてのlwIPユーザの役に立つファイルです。
 
-2) Example applications:
-   contrib/Filelists.cmake provides several file lists
-   containing the example applications.
-   The file also contains several static libraries
-   for these example apps.
-   This file is only useful for you, if you can use one
-   of the examples in your application, which is normally
-   not the case.
+2) サンプルアプリケーション:
+   contrib/Filelists.cmake はサンプルアプリケーションを含む
+   ファイルリストを提供します。
+   このファイルにはこれらのサンプルのためのスタティックライブラリも
+   含まれていmす。
+   このファイルが役に立つのはサンプルがアプリケーションで使える
+   場合だけであり、通常そのようなケースはありません。
 
-3) OS/platform port:
-   Usually the OS port needs to be provided by the user.
-   If a port to Linux, Windows or MacOS is useful for
-   you, you can use
-   contrib/ports/{win32, unix}/Filelists.cmake
-   that contains file lists and libraries for
-   these operating systems.
+3) OS/プラットフォームのポート:
+   通常、OSのポートはユーザーが提供する必要があります。
+   Linux、Windows、MacOSへの移植が役に立つのであれば
+   これらのOS用のファイルリストとライブラリを含む
+   contrib/ports/{win32, unix}/Filelist.cmakeを使うことができます。
 
-VARIABLES
+変数
 =========
-In all cases, you need to provide two variables.
+すべてのケースで次の2つの変数を指定する必要があります。
 
-"LWIP_DIR" pointing to the lwIP directory
-Example:
+"LWIP_DIR" lwIPディレクトリを指します。
+例:
 set(LWIP_DIR ${CMAKE_CURRENT_SOURCE_DIR}/externals/lwip)
 
-"LWIP_INCLUDE_DIRS" that contains the include base paths
-- for lwIP itself (${LWIP_DIR}/src/include)
-- for lwIP contrib if you use it (${LWIP_DIR}/contrib)
-- to a directory containing an OS port
-- to a directory containing lwipopts.h
+"LWIP_INCLUDE_DIRS" 次のincludeベースパスを含みます。
+- lwIP自体用 (${LWIP_DIR}/src/include)
+- 使用する場合は、lwIP contrib用 (${LWIP_DIR}/contrib)
+- OSポートを含むディレクトリ
+-lwpopts.hを含むディレクトリ
 
-Example:
+例:
 set (LWIP_INCLUDE_DIRS
     "${LWIP_DIR}/src/include"
     "${LWIP_DIR}/contrib"
@@ -55,10 +51,10 @@ set (LWIP_INCLUDE_DIRS
     "${LWIP_DIR}/contrib/examples/example_app"
 )
 
-Putting it all together
+以上をまとめる
 =======================
-To get a working application, your CMake system
-needs to provide the variables described above, e.g.
+動作するアプリケーションを作成するに、あなたのCMakeシステムは
+上で述べた変数を提供する必要があります。たとえば、
 set (LWIP_DIR <path to lwip sources>)
 set (LWIP_INCLUDE_DIRS
     "${LWIP_DIR}/src/include"
@@ -67,53 +63,53 @@ set (LWIP_INCLUDE_DIRS
     "<path to lwipopts.h>"
 )
 
-You may add some defines:
+定義を追加することができます:
 set (LWIP_DEFINITIONS LWIP_DEBUG=1)
 
-Then include the filelists you need:
+次に必要なファイルリストをincludeします:
 include(${LWIP_DIR}/src/Filelists.cmake)
 include(${LWIP_DIR}/contrib/Filelists.cmake)
 
-Then, declare you executable:
+次に、executableを宣言します:
 add_executable(my_app <my source files> <my lwip port files>)
 
-Add lwIP include dirs to your app:
+アプリケーションにlwIPのincludeディレクトリを追加します:
 target_include_directories(my_app PRIVATE ${LWIP_INCLUDE_DIRS})
 
-Link your app against the lwIP libs from the filelists you need:
+ファイルリストから必要なlwIPライブラリをアプリケーションにリンクします:
 target_link_libraries(my_app lwipcontribapps lwipallapps lwipcore)
 
-Working example
+動作する例
 ===============
-Working build examples can be found in the
-contrib/ports/{win32, unix}/example_app
-subdirectory.
-To use them, create a build directory and call cmake with
-the lwIP root dir:
+動作するビルド例は contrib/ports/{win32, unix}/example_app サブ
+ディレクトリにあります。これらを使用するには、ビルドディレクトリを
+作成して、lwIPルートディレクトリでcmakeを呼び出します:
 
 - mkdir build
 - cd build
 - cmake ..
 - cmake --build .
 
-The CMakeLists.txt will autoselect the correct port
-for your system (supported: Linux, Windows, Darwin).
+CMakeLists.txt は使用しているシステム用の正しいポートを自動的に
+選択します（サポート済: Linux, Windows, Darwin）.
 
-To configure the example app to your needs, you need to copy the file
+必要に応じてサンプルappを構成するには次のファイル
     contrib/examples/example_app/lwipcfg.h.example
-to
+を
     contrib/examples/example_app/lwipcfg.h
-and edit to your needs.
+にコピーして必要に応じて編集する必要があります。
 
-Makefile based build system
-===========================
-lwIP also maintains file lists for Makefile-based
-build systems. Look for Filelists.mk files
-in the source tree. We try to maintain them,
-but lwIP's mainly focused build system is CMake.
+Makefileベースのビルドシステム
+==============================
+
+lwIPはMakefileベースのビルドシステム用のファイルリストも
+管理しています。ソースツリーのFilelists.mkファイルを探して
+ください。私たちはそれらを維持しようとしていますが、lwIPが
+主にフォーカスしているビルドシステムはCMakeです。
 
 MS Visual Studio
 ================
-lwIP also provides basic support for MSVS in the win32 port
-folder under 'msvc'. We try to maintain these files,
-but lwIP's mainly focused build system is CMake.
+
+lwIPは 'msvc' 下のwin32 portフォルダでMSVSの基本的なサポートを
+提供しています。私たちはこれらのファイルを保守しようとしますが、
+lwIPの主なビルドシステムはCMakeです。

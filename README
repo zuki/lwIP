@@ -1,109 +1,104 @@
-INTRODUCTION
+はじめに
 
-lwIP is a small independent implementation of the TCP/IP protocol suite.
+lwIPはTCP/IPプロトコルスイートの独立した小さな実装です。
 
-The focus of the lwIP TCP/IP implementation is to reduce the RAM usage
-while still having a full scale TCP. This making lwIP suitable for use
-in embedded systems with tens of kilobytes of free RAM and room for
-around 40 kilobytes of code ROM.
+lwIPのTCP/IP実装はフルスケールのTCPを持ちながらRAM使用量を減らすことに
+焦点を当てています。このため、lwIPは数10KBの空きRAMと約40KBのコードROM
+容量のある組み込みシステムでの使用に適しています。
 
-lwIP was originally developed by Adam Dunkels at the Computer and Networks
-Architectures (CNA) lab at the Swedish Institute of Computer Science (SICS)
-and is now developed and maintained by a worldwide network of developers.
-
-FEATURES
-
-  * IP (Internet Protocol, IPv4 and IPv6) including packet forwarding over
-    multiple network interfaces
-  * ICMP (Internet Control Message Protocol) for network maintenance and debugging
-  * IGMP (Internet Group Management Protocol) for multicast traffic management
-  * MLD (Multicast listener discovery for IPv6). Aims to be compliant with
-    RFC 2710. No support for MLDv2
-  * ND (Neighbor discovery and stateless address autoconfiguration for IPv6).
-    Aims to be compliant with RFC 4861 (Neighbor discovery) and RFC 4862
-    (Address autoconfiguration)
-  * DHCP, AutoIP/APIPA (Zeroconf), ACD (Address Conflict Detection)
-    and (stateless) DHCPv6
-  * UDP (User Datagram Protocol) including experimental UDP-lite extensions
-  * TCP (Transmission Control Protocol) with congestion control, RTT estimation
-    fast recovery/fast retransmit and sending SACKs
-  * raw/native API for enhanced performance
-  * Optional Berkeley-like socket API
-  * TLS: optional layered TCP ("altcp") for nearly transparent TLS for any
-    TCP-based protocol (ported to mbedTLS) (see changelog for more info)
-  * PPPoS and PPPoE (Point-to-point protocol over Serial/Ethernet)
-  * DNS (Domain name resolver incl. mDNS)
-  * 6LoWPAN (via IEEE 802.15.4, BLE or ZEP)
+lwIPはもともとスウェーデン・コンピューター科学研究所（SICS）のコンピュータ・
+ネットワーク・アーキテクチャ（CNA）研究室のアダム・ダンケルスによって開発
+されました。現在は世界中の開発者ネットワークによって開発・保守されています。
 
 
-APPLICATIONS
+機能
 
-  * HTTP server with SSI and CGI (HTTPS via altcp)
-  * SNMPv2c agent with MIB compiler (Simple Network Management Protocol), v3 via altcp
+  * IP (Internet Protocol, IPv4/IPv6)。複数のネットワークインターフェースを経由する
+    パケット転送を含む
+  * ICMP (Internet Control Message Protocol)。ネットワークのメンテナンスとデバッグ用
+  * IGMP (Internet Control Message Protocol)。マルチキャストトラフィック管理用
+  * MLD (Multicast Listener Discovery for IPv6)。RFC2710の準拠。MLDv2は未サポート
+  * ND (Neighbor discovery and stateless address autoconfiguration for IPv6)。
+    RFC4861（近隣発見）とRFC4862（アドレス自動設定）の準拠。
+  * DHCP、AutoIP/APIPA (Zeroconf), ACD (Address Conflict Detection), （ステートレス）DHCPv6
+  * UDP (User Datagram Protocol)。実験的なUDP-lite拡張を含む
+  * TCP (Transmission Control Protocol)。輻輳制御、RTT推定、高速リカバリ/高速再送、SACKS送信機能を持つ
+  * raw/native API。パフォーマンス向上のため
+  * Berkeley類似のソケットAPI。オプション
+  * TLS: 任意のTCPベースのプロトコルにほぼ透過的なTLSを提供(mbedTLSに移植)するオプションの
+    レイヤードTCP("altcp") （mbedTLSにポート） (詳細は変更履歴を参照)
+  * PPPoS と PPPoE (Point-to-point protocol over Serial/Ethernet)
+  * DNS (Domain name resolve. mDNSを含む)
+  * 6LoWPAN (IEEE 802.15.4/BLE/ZEP経由)
+
+アプリケーション
+
+  * SSI と CGI (HTTPS via altcp)を持つHTTPサーバ
+  * MIBコンパイルを持つSNMPv2cエージェント (Simple Network Management Protocol), altcp経由でv3対応
   * SNTP (Simple network time protocol)
-  * NetBIOS name service responder
-  * MDNS (Multicast DNS) responder
-  * iPerf server implementation
-  * MQTT client (TLS support via altcp)
+  * NetBIOSネームサーバレスポンダ
+  * MDNS (Multicast DNS) レスポンダ
+  * iPerfサーバ実装
+  * MQTT暗いなと (altcp経由でTLSのサポート)
 
 
-LICENSE
+ライセンス
 
-lwIP is freely available under a BSD license.
+lwIPはBSDライセンスで自由に利用できます。
 
 
-DEVELOPMENT
+開発
 
-lwIP has grown into an excellent TCP/IP stack for embedded devices,
-and developers using the stack often submit bug fixes, improvements,
-and additions to the stack to further increase its usefulness.
+lwIPは組込み機器向けの優れたTCP/IPスタックへと成長してきました。
+このスタックを使用する開発者はその有用性をさらに高めるために
+バグ修正、改良、追加を頻繁に提出します。
 
-Development of lwIP is hosted on Savannah, a central point for
-software development, maintenance and distribution. Everyone can
-help improve lwIP by use of Savannah's interface, Git and the
-mailing list. A core team of developers will commit changes to the
-Git source tree.
+lwIPの開発は、ソフトウェアの開発、メンテナンス、配布の中心的な
+拠点であるSavannah上で行われています。Savannahのインターフェイス、
+Git、メーリングリストを利用することで誰もがlwIPの改善に協力する
+ことができます。開発者のコアチームはGitソースツリーに変更を
+コミットします。
 
-The lwIP TCP/IP stack is maintained in the 'src' directory and
-contributions (such as platform ports and applications) are in
-the 'contrib' directory.
+lwIP TCP/IPスタックは'src'ディレクトリで、コントリビュート
+（プラットフォームポートやアプリケーションなど）は'contrib'ディレクトリで
+管理されています。
 
-See doc/savannah.txt for details on Git server access for users and
-developers.
+ユーザーと開発者がGitサーバにアクセスするための詳細は doc/savannah.txt を
+参照してください。
 
-The current Git tree is web-browsable:
+カレントのGitツリーはWebから見ることができます。
   https://git.savannah.gnu.org/cgit/lwip.git
 
-Submit patches and bugs via the lwIP project page:
+パッチとバグ報告はlwIPプロジェクトページから投稿してください。
   https://savannah.nongnu.org/projects/lwip/
 
-Continuous integration builds (GCC, clang):
+継続的インテグレーションビルド (GCC, clang)サイト。
   https://github.com/lwip-tcpip/lwip/actions
 
 
-DOCUMENTATION
+ドキュメント
 
-Self documentation of the source code is regularly extracted from the current
-Git sources and is available from this web page:
+ソースコード内のセルフドキュメントはカレントGitソースから定期的に抽出され、
+次のウェブページデ見ることができます。
   https://www.nongnu.org/lwip/
 
-Also, there are mailing lists you can subscribe at
+メーリングリストもあります。以下のURLから購読することができます。
   https://savannah.nongnu.org/mail/?group=lwip
-plus searchable archives:
+検索可能なアーカイブもあります。
   https://lists.nongnu.org/archive/html/lwip-users/
   https://lists.nongnu.org/archive/html/lwip-devel/
 
-There is a wiki about lwIP at
+lwIPに関するwikiがあります。
   https://lwip.wikia.com/wiki/LwIP_Wiki
-You might get questions answered there, but unfortunately, it is not as
-well maintained as it should be.
+そこに質問の回答があるかもしれませんが、残念なことにメンテナンスは
+行き届いていません。
 
-lwIP was originally written by Adam Dunkels:
+lwIPはもともとAdam Dunkelsにより作成されました。
   http://dunkels.com/adam/
 
-Reading Adam's papers, the files in docs/, browsing the source code
-documentation and browsing the mailing list archives is a good way to
-become familiar with the design of lwIP.
+adamの論文やdocs/にあるファイルを読んだり、ソースコードのドキュメントを
+閲覧したり、メーリングリストのアーカイブを閲覧することは、lwIPの設計に
+精通する良い方法です。
 
 Adam Dunkels <adam@sics.se>
 Leon Woestenberg <leon.woestenberg@gmx.net>
